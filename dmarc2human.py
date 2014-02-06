@@ -3,9 +3,15 @@ import xml.etree.ElementTree as et
 import sys
 import time
 import socket
+import StringIO
+import zipfile
 
 # parse input
-root = et.parse(sys.stdin)
+data = StringIO.StringIO(sys.stdin.read())
+z = zipfile.ZipFile(data)
+zmember =  z.namelist()[0]
+xml = StringIO.StringIO(z.read(zmember))
+root = et.parse(xml)
 result = ''
 
 # print metadata
