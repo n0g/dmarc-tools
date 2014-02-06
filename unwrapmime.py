@@ -28,7 +28,7 @@ data = StringIO.StringIO(sys.stdin.read())
 try:
 	z = zipfile.ZipFile(data)
 except:
-	data = unwrap(data)
+	data = StringIO.StringIO(unwrap(data))
 
 # print zipfile
-print data
+print data.getvalue()
