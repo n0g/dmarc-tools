@@ -13,13 +13,15 @@ def unwrap(d):
 	sections = s.split(boundary)[1:-1]
 	for section in sections:
 		# check content-disposition
-		cd = section.strip().split('\n')[0]
-		if not "attachment" in cd:
-			continue
-		# extract body
-		body = section.strip().split('\n\n')[1]
-		# base64 decode
-		return base64.b64decode(body)
+		slines = section.strip().split('\n')
+		for sline in slines:
+			if sline == '':
+				continue
+			if "attachment" in sline:
+				# extract body
+				body = section.strip().split('\n\n')[1]
+				# base64 decode
+				return base64.b64decode(body)
 
 # read stdin
 data = StringIO.StringIO(sys.stdin.read())
